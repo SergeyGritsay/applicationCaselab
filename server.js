@@ -13,13 +13,6 @@ const app = express();
 
 mongoose.Promise = bluebird;
 mongoose.connect("mongodb://localhost/user-db",{ useNewUrlParser: true, useUnifiedTopology: true,useFindAndModify: false });
-//mongoose.connect(config.database, { useNewUrlParser: true }, err => {
-//	if (err) {
-//		throw err
-//	}
-//
-//	console.log('Mongo connected');
-//});
 
 app.listen(config.port, err => {
 	if (err) throw err;

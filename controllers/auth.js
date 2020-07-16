@@ -18,11 +18,11 @@ export const signup = async (req,res,next) => {//временная шняга �
 }
 
 export const signin = async (req,res,next) => {//авторизация
-	const { login, password } = req.body;
+	const { login, password } = req.body;//получение данных
 
-	const user = await User.findOne( {login} );
+	const user = await User.findOne( {login} );//поиск по логину
 
-	if (!user) {
+	if (!user) {//если нет юзера, то ошибка
 		return next({
 			status: 400,
 			message: 'User not found'
@@ -30,13 +30,13 @@ export const signin = async (req,res,next) => {//авторизация
 	};
 
 	try {
-		const result = await user.comparePasswords(password);	
+		const result = await user.comparePasswords(password);// сравнение пароля введенного и того что в базе лежит	
 	} catch (e) {
 		return next({
 			status: 400,
 			message: 'Bad Credentials'
 		});	
 	}
-	req.session.userId = user._id;
+	req.session.userId = user._id;// создание сессии для юзера
 	res.json(user);
 }
