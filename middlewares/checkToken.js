@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import config from '../config';
 
 export default async (req,res,next) => {
-	const token = req.headers['authorization'];
+	const token = req.headers['authorization'];//считывание токена из url "Authorization"
 	
 	if (!token) {
 		return next({
@@ -13,7 +13,7 @@ export default async (req,res,next) => {
 	}
 
 	try {
-		var tokenObj = jwt.verify( token, config.secret);
+		var tokenObj = jwt.verify( token, config.secret); // создание токена при помощи jsonwebtoken
 	} catch ({ message }) {
 		return next({
 			status: 400,
@@ -21,7 +21,7 @@ export default async (req,res,next) => {
 		});
 	}
 	
-	req.token = tokenObj;
+	req.token = tokenObj;//отправка токена в клиент
 	console.log(tokenObj);
 	next();
 
