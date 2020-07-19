@@ -1,4 +1,7 @@
+import jwt from 'jsonwebtoken';
+
 import User from '../models/user';
+import config from '../config';
 
 export const signup = async (req,res,next) => {//временная шняга для создания юзера
 	const credentials = req.body;
@@ -30,13 +33,20 @@ export const signin = async (req,res,next) => {//авторизация
 	};
 
 	try {
-		const result = await user.comparePasswords(password);// сравнение пароля введенного и того что в базе лежит	
+		const result = await user.comparePasswords(password);// сравнение пароля введенного и того что в базе лежит
+		console.log(result);
+		if (!result){ 
+			return next({
+				status: 400,
+				message: 'Wrong Password!'
+			});
+		}		
 	} catch (e) {
 		return next({
 			status: 400,
 			message: 'Bad Credentials'
 		});	
 	}
-	req.session.userId = user._id;// создание сессии для юзера
-	res.json(user);
+	const token = jwt.sign({_id: user._id}, config.secret);
+	res.json(token);
 }
