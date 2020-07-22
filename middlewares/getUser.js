@@ -4,7 +4,7 @@ export default async function (req,res,next) {//
 	const { token } =req;// Получаем токен
 
 	try {
-		var user await User.Service.getUserByToken(token);// Получаем пользователя используя UserService
+		var user = await UserService.getUserByToken(token);// Получаем пользователя используя UserService
 	} catch ({ message }) {
 		return next({
 			status: 500,
