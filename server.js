@@ -9,6 +9,7 @@ import config from './config';
 import authRoute from './routes/auth';
 import userRoute from './routes/user';
 import errorHandler from './middlewares/errorHandler';
+import getUser from './middlewares/getUser';
 import checkToken from './middlewares/checkToken';
 
 const app = express();
@@ -33,5 +34,6 @@ app.use(session({
 
 app.use('/', authRoute);
 app.use('/', checkToken, userRoute);
+app.use(getUser);
 
 app.use(errorHandler);
