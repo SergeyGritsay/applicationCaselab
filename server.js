@@ -8,6 +8,7 @@ import bluebird from 'bluebird';
 import config from './config';
 import authRoute from './routes/auth';
 import userRoute from './routes/user';
+import pageRoute from './routes/page';
 import errorHandler from './middlewares/errorHandler';
 import getUser from './middlewares/getUser';
 import checkToken from './middlewares/checkToken';
@@ -35,5 +36,6 @@ app.use(session({
 app.use('/', authRoute);
 app.use('/', checkToken, userRoute);
 app.use(getUser);
+app.use('/', checkToken, pageRoute);
 
 app.use(errorHandler);
